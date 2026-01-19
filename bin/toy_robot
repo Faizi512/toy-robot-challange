@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/simulator'
+require_relative '../lib/command_parser'
+
+simulator = Simulator.new
+
+ARGF.each_line do |line|
+  line = line.strip
+  next if line.empty?
+
+  command = CommandParser.parse(line)
+  result = simulator.execute(command)
+
+  puts result[:output] if result[:success] && result[:command] == :report
+end
