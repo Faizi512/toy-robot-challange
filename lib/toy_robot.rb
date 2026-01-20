@@ -29,7 +29,7 @@ class ToyRobot
     end
 
     def next_position
-        return nil unless placed?
+        return unless placed?
 
         x_axis, y_axis = Direction.movement(@direction).values
         [@x + x_axis, @y + y_axis]
