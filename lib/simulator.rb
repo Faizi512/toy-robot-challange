@@ -9,7 +9,7 @@ class Simulator
 
   def execute(command)
     case command[:command]
-    when :place  then execute_place(command)
+    when :place  then execute_place(**command.slice(:x, :y, :direction))
     when :move   then execute_move
     when :left   then execute_left
     when :right  then execute_right
@@ -21,8 +21,7 @@ class Simulator
 
   private
 
-  def execute_place(command)
-    x, y, direction = command[:x], command[:y], command[:direction]
+  def execute_place(x:, y:, direction:)
     return { success: false, command: :place, reason: 'Invalid position' } unless @table.valid_position?(x, y)
   
     @robot.place(x, y, direction)

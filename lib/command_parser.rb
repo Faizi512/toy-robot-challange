@@ -5,7 +5,10 @@ module CommandParser
     class << self
 
         def parse(command)
-            cmd, args = command.strip.upcase.split(' ', 2)
+            cmd_string = command.strip
+            return { command: :noop } if cmd_string.empty?
+            
+            cmd, args = cmd_string.upcase.split(' ', 2)
             return invalid_command unless VALID_COMMANDS.include?(cmd)
 
             case cmd
