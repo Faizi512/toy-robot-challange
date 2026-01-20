@@ -14,6 +14,7 @@ class Simulator
     when :left   then execute_left
     when :right  then execute_right
     when :report then execute_report
+    when :noop   then { success: true, command: :noop }
     else
         { success: false, command: command[:command], reason: 'Invalid command' }
     end
