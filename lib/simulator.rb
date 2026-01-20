@@ -1,5 +1,6 @@
 require_relative 'table'
 require_relative 'toy_robot'
+require_relative 'command_parser'
 
 class Simulator
   def initialize
@@ -7,7 +8,8 @@ class Simulator
     @robot = ToyRobot.new
   end
 
-  def execute(command)
+  def execute(line)
+    command = CommandParser.parse(line)
     case command[:command]
     when :place  then execute_place(**command.slice(:x, :y, :direction))
     when :move   then execute_move
@@ -16,7 +18,7 @@ class Simulator
     when :report then execute_report
     when :noop   then { success: true, command: :noop }
     else
-        { success: false, command: command[:command], reason: 'Invalid command' }
+      { success: false, command: command[:command], reason: "Invalid command (Hint: #{command[:hint]})" }
     end
   end
 
