@@ -9,7 +9,11 @@ RSpec.describe Simulator do
         result = simulator.execute({ command: :place, x: 0, y: 0, direction: :north })
         expect(result[:success]).to be true
         expect(result[:command]).to eq(:place)
-      end
+    
+        # Verify robot is actually placed
+        report = simulator.execute({ command: :report })
+        expect(report[:output]).to eq('0,0,NORTH')
+    end
 
       it 'fails for invalid position' do
         result = simulator.execute({ command: :place, x: 5, y: 5, direction: :north })
@@ -22,6 +26,10 @@ RSpec.describe Simulator do
           simulator.execute({ command: :place, x: 0, y: 0, direction: :north })
           result = simulator.execute({ command: :move })
           expect(result[:success]).to be true
+
+          # Verify robot actually moved
+          report = simulator.execute({ command: :report })
+          expect(report[:output]).to eq('0,1,NORTH')
         end
       
         it 'fails when move would fall off table' do
@@ -41,6 +49,10 @@ RSpec.describe Simulator do
           simulator.execute({ command: :place, x: 0, y: 0, direction: :north })
           result = simulator.execute({ command: :left })
           expect(result[:success]).to be true
+
+          # Verify robot actually turned left
+          report = simulator.execute({ command: :report })
+          expect(report[:output]).to eq('0,0,WEST')
         end
       
         it 'fails when robot not placed' do
@@ -54,6 +66,10 @@ RSpec.describe Simulator do
           simulator.execute({ command: :place, x: 0, y: 0, direction: :north })
           result = simulator.execute({ command: :right })
           expect(result[:success]).to be true
+
+          # Verify robot actually turned right
+          report = simulator.execute({ command: :report })
+          expect(report[:output]).to eq('0,0,EAST')
         end
       
         it 'fails when robot not placed' do
