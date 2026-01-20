@@ -1,43 +1,40 @@
 module Direction
+    class << self
+        def left(current_direction)
+            validate!(current_direction)
+            index = CLOCKWISE.index(current_direction)
+            CLOCKWISE[(index - 1) % 4]
+        end
 
-    NORTH = :north
-    SOUTH = :south
-    EAST = :east
-    WEST = :west
+        def right(current_direction)
+            validate!(current_direction)
+            index = CLOCKWISE.index(current_direction)
+            CLOCKWISE[(index + 1) % 4]
+        end
 
-    CLOCKWISE = [NORTH, EAST, SOUTH, WEST].freeze
+        def movement(current_direction)
+            validate!(current_direction)
+            MOVEMENTS[current_direction]
+        end
 
+        def valid?(direction)
+            CLOCKWISE.include?(direction)
+        end
 
-    MOVEMENTS = {
-        NORTH => { x: 0, y: 1 },
-        EAST => { x: 1, y: 0 },
-        SOUTH => { x: 0, y: -1 },
-        WEST => { x: -1, y: 0 }
-    }.freeze
+        private
 
-    def self.left(current_direction)
-        validate!(current_direction)
-        index = CLOCKWISE.index(current_direction)
-        CLOCKWISE[(index - 1) % 4]
+        # Explicit order matters for rotation logic - not derived from MOVEMENTS.keys
+        CLOCKWISE = [:north, :east, :south, :west].freeze
+
+        MOVEMENTS = {
+            north: { x: 0, y: 1 },
+            east:  { x: 1, y: 0 },
+            south: { x: 0, y: -1 },
+            west:  { x: -1, y: 0 }
+        }.freeze
+
+        def validate!(direction)
+            raise ArgumentError, "Invalid direction: #{direction}" unless valid?(direction)
+        end
     end
-
-    def self.right(current_direction)
-        validate!(current_direction)
-        index = CLOCKWISE.index(current_direction)
-        CLOCKWISE[(index + 1) % 4]
-    end
-
-    def self.movement(current_direction)
-        validate!(current_direction)
-        MOVEMENTS[current_direction]
-    end
-
-    def self.valid?(direction)
-        CLOCKWISE.include?(direction)
-    end
-
-    def self.validate!(direction)
-        raise ArgumentError, "Invalid direction: #{direction}" unless valid?(direction)
-    end
-    private_class_method :validate!
 end
