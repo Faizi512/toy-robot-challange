@@ -23,7 +23,7 @@ module Direction
 
         private
 
-        # Explicit order matters for rotation logic - not derived from MOVEMENTS.keys
+        # Explicit order matters for rotation logic, not derived from MOVEMENTS.keys
         CLOCKWISE = [:north, :east, :south, :west].freeze
 
         MOVEMENTS = {

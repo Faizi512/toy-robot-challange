@@ -1,8 +1,6 @@
 require_relative 'direction'
 
 class ToyRobot
-    attr_reader :x, :y, :direction
-
     def initialize
         @x = nil
         @y = nil
@@ -49,4 +47,8 @@ class ToyRobot
     def placed?
         !@x.nil? && !@y.nil? && !@direction.nil?
     end
+
+    private
+
+    attr_reader :x, :y, :direction
 end

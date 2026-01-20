@@ -5,9 +5,9 @@ RSpec.describe ToyRobot do
 
     describe '#initialize' do
         it 'initializes the robot with nil values' do
-            expect(toy_robot.x).to be_nil
-            expect(toy_robot.y).to be_nil
-            expect(toy_robot.direction).to be_nil
+            expect(toy_robot.report[:x]).to be_nil
+            expect(toy_robot.report[:y]).to be_nil
+            expect(toy_robot.report[:direction]).to be_nil
         end
     end 
 
@@ -15,17 +15,17 @@ RSpec.describe ToyRobot do
         context 'when the position is valid' do
             it 'places the robot on the table' do
                 toy_robot.place(0, 0, :north)
-                expect(toy_robot.x).to eq(0)
-                expect(toy_robot.y).to eq(0)
-                expect(toy_robot.direction).to eq(:north)
+                expect(toy_robot.report[:x]).to eq(0)
+                expect(toy_robot.report[:y]).to eq(0)
+                expect(toy_robot.report[:direction]).to eq(:north)
             end
 
             it 'can re-place the robot to a new position' do
                 toy_robot.place(0, 0, :north)
                 toy_robot.place(3, 3, :south)
-                expect(toy_robot.x).to eq(3)
-                expect(toy_robot.y).to eq(3)
-                expect(toy_robot.direction).to eq(:south)
+                expect(toy_robot.report[:x]).to eq(3)
+                expect(toy_robot.report[:y]).to eq(3)
+                expect(toy_robot.report[:direction]).to eq(:south)
             end
         end
     end
@@ -35,17 +35,17 @@ RSpec.describe ToyRobot do
             it 'moves the robot one unit forward' do
                 toy_robot.place(0, 0, :north)
                 toy_robot.move
-                expect(toy_robot.x).to eq(0)
-                expect(toy_robot.y).to eq(1)
+                expect(toy_robot.report[:x]).to eq(0)
+                expect(toy_robot.report[:y]).to eq(1)
             end
         end
 
         context 'when the robot is not placed' do
             it 'ignores the move command' do
               toy_robot.move
-              expect(toy_robot.x).to be_nil
-              expect(toy_robot.y).to be_nil
-              expect(toy_robot.direction).to be_nil
+              expect(toy_robot.report[:x]).to be_nil
+              expect(toy_robot.report[:y]).to be_nil
+              expect(toy_robot.report[:direction]).to be_nil
             end
         end
     end
@@ -55,14 +55,14 @@ RSpec.describe ToyRobot do
             it 'turns the robot left' do
                 toy_robot.place(0, 0, :north)
                 toy_robot.turn_left
-                expect(toy_robot.direction).to eq(:west)
+                expect(toy_robot.report[:direction]).to eq(:west)
             end
         end
 
         context 'when the robot is not placed' do
             it 'ignores the move command' do
                 toy_robot.turn_left
-                expect(toy_robot.direction).to be_nil
+                expect(toy_robot.report[:direction]).to be_nil
             end
         end
     end
@@ -72,14 +72,14 @@ RSpec.describe ToyRobot do
             it 'turns the robot right' do
                 toy_robot.place(0, 0, :north)
                 toy_robot.turn_right
-                expect(toy_robot.direction).to eq(:east)
+                expect(toy_robot.report[:direction]).to eq(:east)
             end
         end
 
         context 'when the robot is not placed' do
             it 'ignores the move command' do
                 toy_robot.turn_right
-                expect(toy_robot.direction).to be_nil
+                expect(toy_robot.report[:direction]).to be_nil
             end
         end
     end
