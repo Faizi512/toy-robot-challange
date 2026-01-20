@@ -20,14 +20,15 @@ module CommandParser
         VALID_COMMANDS = %w[MOVE LEFT RIGHT REPORT PLACE].freeze
 
         def parse_place(args)
-            return invalid_command if args.nil?
-
+            return { command: :invalid, hint: "PLACE requires arguments: X,Y,DIRECTION" } if args.nil?
+        
             x, y, direction = args.split(',').map(&:strip)
-            return invalid_command unless x && y && direction
-
-            return invalid_command unless Direction.valid?(direction.downcase.to_sym)
-
-            {command: :place, x: x.to_i, y: y.to_i, direction: direction.downcase.to_sym}
+            return { command: :invalid, hint: "PLACE requires format: X,Y,DIRECTION" } unless x && y && direction
+        
+            direction_sym = direction.downcase.to_sym
+            return { command: :invalid, hint: "Invalid direction. Use: NORTH, SOUTH, EAST, WEST" } unless Direction.valid?(direction_sym)
+        
+            {command: :place, x: x.to_i, y: y.to_i, direction: direction_sym}
         end
 
         def invalid_command
