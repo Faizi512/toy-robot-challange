@@ -9,5 +9,10 @@ ARGF.each_line do |line|
   command = CommandParser.parse(line)
   result = simulator.execute(command)
 
-  puts result[:output] if result[:success] && result[:command] == :report
+  if result[:success] && result[:command] == :report
+    puts result[:output]
+  elsif !result[:success]
+    error_message = result[:reason] || command[:hint]
+    puts "Error: #{error_message}" if error_message
+  end
 end
