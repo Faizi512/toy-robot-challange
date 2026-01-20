@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/simulator'
+
+simulator = Simulator.new
+
+ARGF.each_line do |line|
+  result = simulator.execute(line)
+
+  if result[:success] && result[:command] == :report
+    puts result[:output]
+  elsif !result[:success]
+    puts "Error: #{result[:reason]}" if result[:reason]
+  end
+end
