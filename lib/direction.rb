@@ -1,15 +1,11 @@
 module Direction
     class << self
         def left(current_direction)
-            validate!(current_direction)
-            index = CLOCKWISE.index(current_direction)
-            CLOCKWISE[(index - 1) % 4]
+            rotate(current_direction, -1)
         end
-
+        
         def right(current_direction)
-            validate!(current_direction)
-            index = CLOCKWISE.index(current_direction)
-            CLOCKWISE[(index + 1) % 4]
+            rotate(current_direction, 1)
         end
 
         def movement(current_direction)
@@ -35,6 +31,12 @@ module Direction
 
         def validate!(direction)
             raise ArgumentError, "Invalid direction: #{direction}" unless valid?(direction)
+        end
+
+        def rotate(current_direction, offset)
+            validate!(current_direction)
+            index = CLOCKWISE.index(current_direction)
+            CLOCKWISE[(index + offset) % 4]
         end
     end
 end
