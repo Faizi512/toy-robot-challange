@@ -1,11 +1,6 @@
 require_relative 'direction'
 
 class ToyRobot
-    def initialize
-        @x = nil
-        @y = nil
-        @direction = nil
-    end
 
     def place(x, y, direction)
         @x = x
